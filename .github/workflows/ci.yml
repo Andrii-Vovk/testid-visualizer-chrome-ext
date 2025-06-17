@@ -41,4 +41,36 @@ jobs:
       with:
         name: extension-build-${{ github.sha }}
         path: dist/
-        retention-days: 7 
+        retention-days: 7
+        
+    - name: Create release archive
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        cd dist
+        zip -r ../testid-visualizer-extension.zip ./*
+        cd ..
+        
+    - name: Create GitHub Release
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ github.run_number }}
+        name: Release v${{ github.run_number }}
+        body: |
+          Automated release of TestID Visualizer Chrome Extension
+          
+          **Changes in this release:**
+          - Built from commit: ${{ github.sha }}
+          - Build number: ${{ github.run_number }}
+          
+          **Installation:**
+          1. Download the `testid-visualizer-extension.zip` file
+          2. Extract the contents
+          3. Open Chrome and go to `chrome://extensions/`
+          4. Enable "Developer mode"
+          5. Click "Load unpacked" and select the extracted folder
+        files: testid-visualizer-extension.zip
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
