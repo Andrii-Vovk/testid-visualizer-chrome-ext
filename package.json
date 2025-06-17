@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:extension",
+    "build:web": "vite build",
     "build:dev": "vite build --mode development",
+    "build:extension": "vite build && npm run copy-extension-files",
+    "copy-extension-files": "cp manifest.json dist/ && cp -r icons dist/ && cp popup.html dist/ && cp popup.js dist/ && cp content.js dist/",
     "lint": "eslint .",
     "preview": "vite preview"
   },
