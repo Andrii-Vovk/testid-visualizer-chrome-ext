@@ -1,7 +1,6 @@
-
 // Track overlay state
 let overlaysActive = false;
-let overlayElements = [];
+let overlayElements: HTMLElement[] = [];
 
 // Clean up function
 function removeOverlays() {
@@ -14,9 +13,10 @@ function removeOverlays() {
   
   // Reset any modified position styles
   document.querySelectorAll('[data-testid]').forEach(el => {
-    if (el.dataset.originalPosition) {
-      el.style.position = el.dataset.originalPosition;
-      delete el.dataset.originalPosition;
+    const element = el as HTMLElement;
+    if (element.dataset.originalPosition) {
+      element.style.position = element.dataset.originalPosition;
+      delete element.dataset.originalPosition;
     }
   });
   
@@ -24,7 +24,7 @@ function removeOverlays() {
 }
 
 // Create overlays function
-function createOverlays() {
+function createOverlays(): number {
   if (overlaysActive) {
     removeOverlays();
   }
@@ -32,8 +32,11 @@ function createOverlays() {
   const elements = document.querySelectorAll('[data-testid]');
 
   elements.forEach((el) => {
-    const testId = el.getAttribute('data-testid');
-    const isForm = el.tagName.toLowerCase() === 'form';
+    const element = el as HTMLElement;
+    const testId = element.getAttribute('data-testid');
+    if (!testId) return;
+    
+    const isForm = element.tagName.toLowerCase() === 'form';
 
     const overlay = document.createElement('div');
     overlay.textContent = `🧪 ${testId}`;
@@ -60,19 +63,19 @@ function createOverlays() {
     if (isForm) {
       overlay.style.marginBottom = '4px';
       overlay.style.display = 'inline-block';
-      el.parentNode.insertBefore(overlay, el);
+      element.parentNode?.insertBefore(overlay, element);
     } else {
       overlay.style.position = 'absolute';
       overlay.style.top = '0';
       overlay.style.left = '0';
 
-      const currentPosition = getComputedStyle(el).position;
+      const currentPosition = getComputedStyle(element).position;
       if (currentPosition === 'static') {
-        el.dataset.originalPosition = 'static';
-        el.style.position = 'relative';
+        element.dataset.originalPosition = 'static';
+        element.style.position = 'relative';
       }
 
-      el.appendChild(overlay);
+      element.appendChild(overlay);
     }
 
     overlayElements.push(overlay);
@@ -111,13 +114,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-// Initialize based on stored state
-chrome.storage.local.get([`testid_${window.location.href}`]).then(result => {
-  // Check if overlays should be active for this tab
-  // This will be handled by the popup when user interacts
+// Initialize based on stored state by asking background script for tab state
+chrome.runtime.sendMessage({ action: 'getTabState' }, (response) => {
+  console.log('TestID Visualizer: Response from background script', response);
+
+  if (response && response.isActive) {
+    // Restore overlays if they were active before reload
+    setTimeout(() => {
+      createOverlays();
+    }, 2000); // Small delay to ensure DOM is ready
+  }
 });
 
 // Clean up when page unloads
 window.addEventListener('beforeunload', () => {
   removeOverlays();
-});
+}); 

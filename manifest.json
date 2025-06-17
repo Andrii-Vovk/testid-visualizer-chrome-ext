@@ -6,8 +6,12 @@
   "description": "Toggle overlays to visualize data-testid attributes on web pages",
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "tabs"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Test ID Visualizer"

@@ -1,8 +1,12 @@
-
 document.addEventListener('DOMContentLoaded', async () => {
   const toggle = document.getElementById('toggle');
   const status = document.getElementById('status');
   const count = document.getElementById('count');
+
+  if (!toggle || !status || !count) {
+    console.error('Required popup elements not found');
+    return;
+  }
 
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -36,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  function updateUI(isActive) {
+  function updateUI(isActive: boolean) {
     toggle.classList.toggle('active', isActive);
     status.textContent = isActive ? 'ON' : 'OFF';
     
@@ -56,4 +60,4 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Silently handle - page might need refresh
     }
   }
-});
+}); 
