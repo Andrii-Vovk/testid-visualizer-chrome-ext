@@ -1,0 +1,27 @@
+
+{
+  "manifest_version": 3,
+  "name": "Test ID Visualizer",
+  "version": "1.0",
+  "description": "Toggle overlays to visualize data-testid attributes on web pages",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Test ID Visualizer"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

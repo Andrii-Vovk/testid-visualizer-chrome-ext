@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 280px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin: 0;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .header h1 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .header p {
+      margin: 0;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .toggle-switch.active {
+      background: rgba(76, 175, 80, 0.8);
+      border-color: #4CAF50;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .toggle-switch.active .toggle-slider {
+      transform: translateX(30px);
+    }
+    
+    .status {
+      font-size: 14px;
+      font-weight: 500;
+      min-width: 60px;
+    }
+    
+    .info {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      line-height: 1.4;
+      margin-top: 15px;
+    }
+    
+    .legend {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .legend-item {
+      flex: 1;
+      text-align: center;
+      font-size: 10px;
+      padding: 4px;
+      border-radius: 4px;
+    }
+    
+    .legend-form {
+      background: rgba(0, 123, 255, 0.7);
+    }
+    
+    .legend-element {
+      background: rgba(255, 0, 0, 0.7);
+    }
+    
+    .count {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🧪 Test ID Visualizer</h1>
+    <p>Toggle data-testid overlays</p>
+  </div>
+  
+  <div class="toggle-container">
+    <span class="status" id="status">OFF</span>
+    <div class="toggle-switch" id="toggle">
+      <div class="toggle-slider"></div>
+    </div>
+  </div>
+  
+  <div class="info">
+    Click toggle to show/hide data-testid attributes on the current page.
+    
+    <div class="legend">
+      <div class="legend-item legend-form">📋 Forms</div>
+      <div class="legend-item legend-element">🎯 Elements</div>
+    </div>
+    
+    <div class="count" id="count"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
 
-## Project info
+# Test ID Visualizer Chrome Extension
 
-**URL**: https://lovable.dev/projects/22ebd33a-4430-4c32-9bd7-1807f72fbd78
+A Chrome extension that helps developers visualize `data-testid` attributes on web pages by overlaying them with color-coded badges.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Toggle Visualization**: Easy on/off toggle via popup interface
+- **Color-Coded Overlays**: Blue badges for form elements, red badges for other elements  
+- **Element Count**: Shows total number of elements with data-testid attributes
+- **Clean Design**: Modern gradient UI with smooth animations
+- **Per-Tab State**: Remembers toggle state for each browser tab
 
-**Use Lovable**
+## Installation
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/22ebd33a-4430-4c32-9bd7-1807f72fbd78) and start prompting.
+### From Source
+1. Clone or download this repository
+2. Open Chrome and navigate to `chrome://extensions/`
+3. Enable "Developer mode" in the top right
+4. Click "Load unpacked" and select the extension folder
+5. The extension icon will appear in your browser toolbar
 
-Changes made via Lovable will be committed automatically to this repo.
+### Usage
+1. Navigate to any webpage with `data-testid` attributes
+2. Click the Test ID Visualizer icon in your browser toolbar
+3. Toggle the switch to show/hide the overlays
+4. View color-coded badges overlaying elements:
+   - 🔵 Blue badges for form elements (`<form>` tags)
+   - 🔴 Red badges for all other elements
 
-**Use your preferred IDE**
+## Technical Details
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+The extension consists of:
+- **Manifest V3** configuration for modern Chrome extensions
+- **Content Script** that injects the visualization script
+- **Popup Interface** for user interaction and state management
+- **Chrome Storage API** for persisting toggle state per tab
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Development
 
-Follow these steps:
+To modify the extension:
+1. Edit the relevant files (`popup.html`, `popup.js`, `content.js`)
+2. Reload the extension in `chrome://extensions/`
+3. Test on web pages with `data-testid` attributes
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Script Functionality
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+The core visualization script:
+- Finds all elements with `data-testid` attributes
+- Creates overlay badges showing the test ID value
+- Positions overlays appropriately (absolute for most elements, inline for forms)
+- Uses color coding to distinguish element types
+- Handles cleanup when toggled off
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/22ebd33a-4430-4c32-9bd7-1807f72fbd78) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Perfect for developers working with test automation frameworks like Cypress, Playwright, or Testing Library!
