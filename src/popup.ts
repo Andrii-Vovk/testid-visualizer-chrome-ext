@@ -2,11 +2,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   const toggle = document.getElementById('toggle');
   const status = document.getElementById('status');
   const count = document.getElementById('count');
+  const hotkeyCombo = document.getElementById('hotkeyCombo');
 
-  if (!toggle || !status || !count) {
+  if (!toggle || !status || !count || !hotkeyCombo) {
     console.error('Required popup elements not found');
     return;
   }
+
+  // Set the correct hotkey combination based on platform
+  const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  hotkeyCombo.textContent = isMac ? 'Option+Shift+T' : 'Alt+Shift+T';
 
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });

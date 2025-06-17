@@ -113,6 +113,24 @@
       font-size: 12px;
       opacity: 0.9;
     }
+    
+    .hotkey-info {
+      margin: 10px 0;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      border-left: 3px solid rgba(255, 255, 255, 0.5);
+      font-size: 11px;
+    }
+    
+    .hotkey-combo {
+      font-family: 'Courier New', monospace;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+      color: #ffd700;
+    }
   </style>
 </head>
 <body>
@@ -130,6 +148,10 @@
   
   <div class="info">
     Click toggle to show/hide data-testid attributes on the current page.
+    
+    <div class="hotkey-info">
+      <strong>⌨️ Hotkey:</strong> <span class="hotkey-combo" id="hotkeyCombo">Alt+Shift+T</span>
+    </div>
     
     <div class="legend">
       <div class="legend-item legend-form">📋 Forms</div>
