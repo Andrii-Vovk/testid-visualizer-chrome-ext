@@ -1,55 +1,100 @@
-
 # Test ID Visualizer Chrome Extension
 
-A Chrome extension that helps developers visualize `data-testid` attributes on web pages by overlaying them with color-coded badges.
+A Chrome extension that helps developers visualize `data-testid` attributes on web pages by displaying overlays.
 
 ## Features
 
-- **Toggle Visualization**: Easy on/off toggle via popup interface
-- **Color-Coded Overlays**: Blue badges for form elements, red badges for other elements  
-- **Element Count**: Shows total number of elements with data-testid attributes
-- **Clean Design**: Modern gradient UI with smooth animations
-- **Per-Tab State**: Remembers toggle state for each browser tab
-
-## Installation
-
-### From Source
-1. Clone or download this repository
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top right
-4. Click "Load unpacked" and select the extension folder
-5. The extension icon will appear in your browser toolbar
-
-### Usage
-1. Navigate to any webpage with `data-testid` attributes
-2. Click the Test ID Visualizer icon in your browser toolbar
-3. Toggle the switch to show/hide the overlays
-4. View color-coded badges overlaying elements:
-   - 🔵 Blue badges for form elements (`<form>` tags)
-   - 🔴 Red badges for all other elements
-
-## Technical Details
-
-The extension consists of:
-- **Manifest V3** configuration for modern Chrome extensions
-- **Content Script** that injects the visualization script
-- **Popup Interface** for user interaction and state management
-- **Chrome Storage API** for persisting toggle state per tab
+- 🧪 Toggle overlays to show/hide data-testid attributes
+- 📋 Different colors for form elements (blue) vs other elements (red)
+- 🎯 Count display of total elements with data-testid attributes
+- 💾 Remembers state per tab
 
 ## Development
 
-To modify the extension:
-1. Edit the relevant files (`popup.html`, `popup.js`, `content.js`)
-2. Reload the extension in `chrome://extensions/`
-3. Test on web pages with `data-testid` attributes
+### Building the Extension
 
-## Script Functionality
+```bash
+# Install dependencies
+npm install
 
-The core visualization script:
-- Finds all elements with `data-testid` attributes
-- Creates overlay badges showing the test ID value
-- Positions overlays appropriately (absolute for most elements, inline for forms)
-- Uses color coding to distinguish element types
-- Handles cleanup when toggled off
+# Build the extension for production
+npm run build:extension
 
-Perfect for developers working with test automation frameworks like Cypress, Playwright, or Testing Library!
+# Build in development mode
+npm run build:dev
+```
+
+### Loading in Chrome
+
+1. Open Chrome and go to `chrome://extensions/`
+2. Enable "Developer mode" in the top right
+3. Click "Load unpacked"
+4. Select the `dist/` folder from this project
+5. The extension will appear in your extensions bar
+
+### Development Workflow
+
+1. Make changes to `popup.html`, `popup.js`, or `content.js`
+2. Run `npm run build:extension`
+3. Go to `chrome://extensions/` and click the refresh button on your extension
+4. Test the extension on any webpage
+
+## Releases
+
+### Creating a Release
+
+Releases are automated via GitHub Actions. To create a new release:
+
+1. **Tag a new version:**
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+2. **Or create a release on GitHub:**
+   - Go to the "Releases" page in your GitHub repository
+   - Click "Create a new release"
+   - Choose or create a tag (e.g., `v1.0.0`)
+   - Fill in the release title and description
+   - Click "Publish release"
+
+3. **Automatic build:**
+   - GitHub Actions will automatically build the extension
+   - A `testid-visualizer-extension.zip` file will be attached to the release
+   - This zip file can be uploaded directly to the Chrome Web Store
+
+### CI/CD
+
+The project includes two GitHub Actions workflows:
+
+- **CI** (`.github/workflows/ci.yml`): Runs on every push/PR to build and verify the extension
+- **Release** (`.github/workflows/release.yml`): Runs on release creation to build and attach the extension zip
+
+## Extension Structure
+
+- `manifest.json` - Extension configuration
+- `popup.html` - Extension popup UI
+- `popup.js` - Popup logic and Chrome API interactions
+- `content.js` - Content script that creates overlays on web pages
+- `icons/` - Extension icons
+- `dist/` - Built extension files (generated)
+
+## Usage
+
+1. Click the extension icon in your Chrome toolbar
+2. Toggle the switch to ON to show data-testid overlays
+3. Toggle OFF to hide overlays
+4. The extension shows a count of found elements
+
+## Colors
+
+- 🔵 **Blue overlays**: Form elements (`<form>` tags)
+- 🔴 **Red overlays**: All other elements with data-testid
+
+## How It Works
+
+The extension injects a content script into all web pages that:
+1. Searches for elements with `data-testid` attributes
+2. Creates overlay elements showing the testid values
+3. Positions overlays appropriately (inline for forms, absolute for others)
+4. Manages overlay state per tab using Chrome storage API
